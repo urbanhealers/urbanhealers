@@ -77,7 +77,8 @@
       gap: 0.5rem;
       margin: 0.5rem 0;
     }
-     .swatch {
+     <style>
+    .swatch {
       width: 20px;
       height: 20px;
       display: inline-block;
@@ -96,6 +97,30 @@
     .swatch.cblue { background-color: #0047AB; }
     .swatch.sagegreen { background-color: #9DC183; }
     .swatch.green { background-color: forestgreen; }
+    #cart-list {
+      margin-top: 20px;
+    }
+    #cart-list table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+    #cart-list th, #cart-list td {
+      border: 1px solid #ccc;
+      padding: 8px;
+      text-align: left;
+    }
+    #total-price {
+      text-align: right;
+      margin-top: 10px;
+      font-weight: bold;
+    }
+    .remove-btn {
+      background-color: red;
+      color: white;
+      border: none;
+      padding: 4px 8px;
+      cursor: pointer;
+    }
     
     .product button {
       padding: 0.5rem 1.5rem;
@@ -215,9 +240,15 @@
     </div>
     <div id="cart-summary">
       <h3>Your Cart</h3>
-      <div id="cart-items"></div>
-      <p id="cart-total"></p>
-      <button class="checkout-button" onclick="checkout()">Proceed to Checkout</button>
+      <div id="cart-list">
+        <table>
+          <thead>
+            <tr><th>Product</th><th>Size</th><th>Color</th><th>Price</th><th>Action</th></tr>
+          </thead>
+          <tbody id="cart-items"></tbody>
+        </table>
+        <div id="total-price">Total: ₹0</div>
+      </div>
     </div>
   </section>
   <section id="about">
@@ -232,36 +263,69 @@
   <footer>
     &copy; 2025 Urban Healers. All rights reserved.
   </footer>
-  <script>
+ <script>
+    document.querySelectorAll('.color-swatches').forEach(group => {
+      group.querySelectorAll('.swatch').forEach(swatch => {
+        swatch.addEventListener('click', () => {
+          group.querySelectorAll('.swatch').forEach(s => s.classList.remove('selected'));
+          swatch.classList.add('selected');
+          const hiddenInput = group.parentElement.querySelector('.item_color');
+          hiddenInput.value = swatch.title;
+        });
+      });
+    });
+
     const cart = [];
+
+    function updateCartDisplay() {
+      const cartItems = document.getElementById('cart-items');
+      const totalPriceDiv = document.getElementById('total-price');
+      cartItems.innerHTML = '';
+      let total = 0;
+
+      cart.forEach((item, index) => {
+        const row = document.createElement('tr');
+        row.innerHTML = `
+          <td>${item.name}</td>
+          <td>${item.size}</td>
+          <td>${item.color}</td>
+          <td>₹${item.price}</td>
+          <td><button class="remove-btn" data-index="${index}">Remove</button></td>
+        `;
+        cartItems.appendChild(row);
+        total += item.price;
+      });
+
+      totalPriceDiv.textContent = `Total: ₹${total}`;
+
+      document.querySelectorAll('.remove-btn').forEach(button => {
+        button.addEventListener('click', (e) => {
+          const index = e.target.getAttribute('data-index');
+          cart.splice(index, 1);
+          updateCartDisplay();
+        });
+      });
+    }
+
     document.querySelectorAll('.simple-cart-add').forEach(button => {
       button.addEventListener('click', () => {
         const product = button.closest('.product');
-        const name = button.getAttribute('data-name');
-        const price = parseFloat(button.getAttribute('data-price'));
+        const name = button.dataset.name;
+        const price = parseFloat(button.dataset.price);
         const size = product.querySelector('.item_size').value;
-        const fit = product.querySelector('.item_fit').value;
         const color = product.querySelector('.item_color').value;
-        const item = { name, price, size, fit, color };
-        cart.push(item);
-        renderCart();
+
+        if (!color) {
+          alert('Please select a color by clicking on a swatch.');
+          return;
+        }
+
+        cart.push({ name, price, size, color });
+        updateCartDisplay();
+        alert(`Added to cart: ${name} - Size: ${size}, Color: ${color}`);
       });
     });
-    function renderCart() {
-      const cartItems = document.getElementById('cart-items');
-      const cartTotal = document.getElementById('cart-total');
-      cartItems.innerHTML = '';
-      let total = 0;
-      cart.forEach((item, index) => {
-        total += item.price;
-        cartItems.innerHTML += `
-          <div class="cart-item">
-            ${item.name} - ${item.size} / ${item.fit} / ${item.color} - $${item.price.toFixed(2)}
-          </div>
-        `;
-      });
-      cartTotal.textContent = `Total: $${total.toFixed(2)}`;
-    }
+ 
     function checkout() {
       if (cart.length === 0) {
         alert('Your cart is empty.');
