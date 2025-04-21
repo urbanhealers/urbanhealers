@@ -238,6 +238,19 @@
         <button class="simple-cart-add" data-name="Olive Green Suit" data-price="1600">Add to Cart</button>
       </div>
     </div>
+   <form id="checkout-form">
+  <h3>Checkout Details</h3>
+  <label>
+    Name:<br>
+    <input type="text" id="user-name" required>
+  </label><br><br>
+  <label>
+    Phone Number:<br>
+    <input type="text" id="user-phone" required>
+  </label><br><br>
+  <button type="submit">Finalize Checkout</button>
+</form>
+<div id="checkout-summary"></div>
     <div id="cart-summary">
       <h3>Your Cart</h3>
       <div id="cart-list">
@@ -253,7 +266,7 @@
   </section>
   <section id="about">
     <h2>About Us</h2>
-    <p>Urban Healers isn’t just a suit brand — it's a movement. We believe in healing lives through style, confidence, and class. Every stitch we craft is designed to elevate your presence and empower your purpose.</p>
+    <p>Urban Healers isn’t just a suit brand — it's a movement. We believe in healing lives through style, confidence, and comfort. Every stitch we craft is designed to elevate your presence and empower your purpose.</p>
   </section>
   <section id="contact">
     <h2>Contact Us</h2>
@@ -334,17 +347,30 @@
       });
     });
  
-    function checkout() {
-      if (cart.length === 0) {
-        alert('Your cart is empty.');
-        return;
-      }
-      fetch("https://script.google.com/macros/s/AKfycbwu7zPR04rVnZ6nS0SRXPdcN7UUOf4WoVWvx83FmRDP-fGfhWiVZYAq04FpaGHo08Q24Q/exec", {
+   const checkoutForm = document.getElementById('checkout-form');
+  checkoutForm.addEventListener('submit', function (e) {
+    e.preventDefault();
+
+    const name = document.getElementById('user-name').value.trim();
+    const phone = document.getElementById('user-phone').value.trim();
+
+    if (cart.length === 0) {
+      alert('Your cart is empty.');
+      return;
+    }
+
+    const payload = {
+      name: name,
+      phone: phone,
+      items: cart
+    };
+      fetch("https://script.google.com/u/0/home/projects/1gg0jw_7saatIy4LoinqH4UawALuifVNyq1Ep1_lsjgtIo0c8IvwwU7Fy/exec", {
         method: "POST",
-        body: JSON.stringify(cart),
-        headers: {
-          "Content-Type": "application/json"
-        }
+       mode: 'no-cors', // Google Apps Script doesn't support CORS headers by default
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(payload)
       })
       .then(res => res.text())
       .then(res => {
