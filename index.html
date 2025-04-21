@@ -264,13 +264,21 @@
     &copy; 2025 Urban Healers. All rights reserved.
   </footer>
  <script>
-    document.querySelectorAll('.color-swatches').forEach(group => {
-      group.querySelectorAll('.swatch').forEach(swatch => {
+   document.querySelectorAll('.product').forEach(product => {
+      const swatches = product.querySelectorAll('.swatch');
+      const colorInput = product.querySelector('.item_color');
+      const img = product.querySelector('img');
+      const baseName = product.getAttribute('data-base-name');
+
+      swatches.forEach(swatch => {
         swatch.addEventListener('click', () => {
-          group.querySelectorAll('.swatch').forEach(s => s.classList.remove('selected'));
+          swatches.forEach(s => s.classList.remove('selected'));
           swatch.classList.add('selected');
-          const hiddenInput = group.parentElement.querySelector('.item_color');
-          hiddenInput.value = swatch.title;
+          const color = swatch.getAttribute('title');
+          colorInput.value = color;
+          // Update the image source
+          img.src = `${baseName}-${color}.png`;
+          img.alt = `${color} suit`;
         });
       });
     });
