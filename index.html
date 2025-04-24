@@ -277,7 +277,6 @@
     &copy; 2025 Urban Healers. All rights reserved.
   </footer>
  <script>
-   <script>
   window.addEventListener('DOMContentLoaded', () => {
     const cart = [];
 
@@ -304,6 +303,7 @@
     });
 
     function updateCartDisplay() {
+      alert("Here");
       const cartItems = document.getElementById('cart-items');
       const totalPriceDiv = document.getElementById('total-price');
       cartItems.innerHTML = '';
