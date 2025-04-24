@@ -376,7 +376,7 @@
       .then(res => {
         alert("Thank you for your order! Your data has been recorded.");
         cart.length = 0;
-        renderCart();
+        updateCartDisplay();
       })
       .catch(err => {
         console.error("Failed to submit order:", err);
