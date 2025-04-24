@@ -201,7 +201,7 @@
           <div class="swatch black" title="black"></div>
            <div class="swatch maroon" title="maroon"></div>
         </div>
-        <button class="simple-cart-add" data-name="Hot Pink Suit" data-price="1700">Add to Cart</button>
+        <button class="simple-cart-add" data-name="AAA" data-price="1700">Add to Cart</button>
       </div>
       <div class="product">
         <img src="suit2.png" alt="Slate Grey Suit">
@@ -218,7 +218,7 @@
           <div class="swatch maroon" title="Maroon"></div>
           <div class="swatch cblue" title="Cobalt Blue"></div>
         </div>
-        <button class="simple-cart-add" data-name="Slate Grey Suit" data-price="1850">Add to Cart</button>
+        <button class="simple-cart-add" data-name="BBB" data-price="1850">Add to Cart</button>
       </div>
       <div class="product">
         <img src="suit3.png" alt="Olive Green Suit">
@@ -235,7 +235,7 @@
           <div class="swatch green" title="Forest Green"></div>
           <div class="swatch charcoal" title="Charcoal"></div>
         </div>
-        <button class="simple-cart-add" data-name="Olive Green Suit" data-price="1600">Add to Cart</button>
+        <button class="simple-cart-add" data-name="CCC" data-price="1600">Add to Cart</button>
       </div>
     </div>
    <form id="checkout-form">
@@ -281,7 +281,7 @@
       const swatches = product.querySelectorAll('.swatch');
       const colorInput = product.querySelector('.item_color');
       const img = product.querySelector('img');
-      const baseName = product.getAttribute('data-base-name');
+      const baseName = product.getAttribute('data-name');
 
       swatches.forEach(swatch => {
         swatch.addEventListener('click', () => {
