@@ -277,11 +277,16 @@
     &copy; 2025 Urban Healers. All rights reserved.
   </footer>
  <script>
-   document.querySelectorAll('.product').forEach(product => {
+   <script>
+  window.addEventListener('DOMContentLoaded', () => {
+    const cart = [];
+
+    // Handle swatch selection + image update
+    document.querySelectorAll('.product').forEach(product => {
       const swatches = product.querySelectorAll('.swatch');
       const colorInput = product.querySelector('.item_color');
       const img = product.querySelector('img');
-      const baseName = product.getAttribute('data-name');
+      const baseName = product.getAttribute('data-base-name');
 
       swatches.forEach(swatch => {
         swatch.addEventListener('click', () => {
@@ -289,17 +294,16 @@
           swatch.classList.add('selected');
           const color = swatch.getAttribute('title');
           colorInput.value = color;
-          // Update the image source
-          img.src = `${baseName}-${color}.png`;
-          img.alt = `${color} suit`;
+
+          if (baseName) {
+            img.src = `${baseName}-${color}.png`;
+            img.alt = `${color} suit`;
+          }
         });
       });
     });
 
-    const cart = [];
-
     function updateCartDisplay() {
-      alert("here");
       const cartItems = document.getElementById('cart-items');
       const totalPriceDiv = document.getElementById('total-price');
       cartItems.innerHTML = '';
@@ -320,15 +324,17 @@
 
       totalPriceDiv.textContent = `Total: ₹${total}`;
 
+      // Add remove functionality
       document.querySelectorAll('.remove-btn').forEach(button => {
         button.addEventListener('click', (e) => {
-          const index = e.target.getAttribute('data-index');
+          const index = parseInt(e.target.getAttribute('data-index'));
           cart.splice(index, 1);
           updateCartDisplay();
         });
       });
     }
 
+    // Add to cart handler
     document.querySelectorAll('.simple-cart-add').forEach(button => {
       button.addEventListener('click', () => {
         const product = button.closest('.product');
@@ -347,34 +353,35 @@
         alert(`Added to cart: ${name} - Size: ${size}, Color: ${color}`);
       });
     });
- 
-   const checkoutForm = document.getElementById('checkout-form');
-  checkoutForm.addEventListener('submit', function (e) {
-    e.preventDefault();
 
-    const name = document.getElementById('user-name').value.trim();
-    const phone = document.getElementById('user-phone').value.trim();
+    // Checkout submission
+    const checkoutForm = document.getElementById('checkout-form');
+    checkoutForm.addEventListener('submit', function (e) {
+      e.preventDefault();
 
-    if (cart.length === 0) {
-      alert('Your cart is empty.');
-      return;
-    }
+      const name = document.getElementById('user-name').value.trim();
+      const phone = document.getElementById('user-phone').value.trim();
 
-    const payload = {
-      name: name,
-      phone: phone,
-      items: cart
-    };
+      if (cart.length === 0) {
+        alert('Your cart is empty.');
+        return;
+      }
+
+      const payload = {
+        name: name,
+        phone: phone,
+        items: cart
+      };
+
       fetch("https://script.google.com/u/0/home/projects/1gg0jw_7saatIy4LoinqH4UawALuifVNyq1Ep1_lsjgtIo0c8IvwwU7Fy/exec", {
         method: "POST",
-       mode: 'no-cors', // Google Apps Script doesn't support CORS headers by default
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(payload)
+        mode: 'no-cors',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(payload)
       })
-      .then(res => res.text())
-      .then(res => {
+      .then(() => {
         alert("Thank you for your order! Your data has been recorded.");
         cart.length = 0;
         updateCartDisplay();
@@ -382,8 +389,9 @@
       .catch(err => {
         console.error("Failed to submit order:", err);
         alert("There was an error submitting your order.");
-      }));
-    }
-  </script>
+      });
+    });
+  });
+</script>
 </body>
 </html>
