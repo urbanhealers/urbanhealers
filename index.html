@@ -367,13 +367,19 @@
         return;
       }
 
-      const payload = {
+      const formattedItems = cart.map(item => ({
+  name: item.name,
+  size: item.size,
+  color: item.color,
+  price: item.price
+}));
+
+const payload = {
   name: name,
   phone: phone,
-  items: cart.map(item => `${item.name} - ${item.size} - ${item.color} - ₹${item.price}`).join("; ")
+  items: formattedItems
 };
-     
- 
+           
       fetch("https://hook.eu2.make.com/8mz5f2kd1bhnmal8izbd7oonpe7q848a", {
         method: "POST",
         headers: {
