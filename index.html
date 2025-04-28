@@ -90,13 +90,12 @@
     .swatch.selected {
       border: 2px solid #000;
     }
-    .swatch.navy { background-color: navy; }
+    .swatch.navy { background-color: #000080; }
     .swatch.charcoal { background-color: #36454F; }
-    .swatch.black { background-color: black; }
-    .swatch.maroon { background-color: maroon; }
-    .swatch.cblue { background-color: #0047AB; }
+    .swatch.black { background-color: #000000; }
+    .swatch.rblue { background-color: #4169e1; }
     .swatch.sagegreen { background-color: #9DC183; }
-    .swatch.green { background-color: forestgreen; }
+    .swatch.brown { background-color: #7B3F00; }
     #cart-list {
       margin-top: 20px;
     }
@@ -176,18 +175,18 @@
   </header>
   <nav>
     <a href="#home">Home</a>
-    <a href="#Men">Men</a>
-    <a href="#Women">Women</a>
+    <a href="#Loungewear">Lounge Wear</a>
+    <a href="#WorkWear">Work Wear</a>
     <a href="#about">About</a>
     <a href="#contact">Contact</a>
   </nav>
- <section id="Women">
+ <section id="WorkWear">
     <h2>Shop Our Suits</h2>
     <div class="products">
       <div class="product">
-        <img src="ChatGPT Image Apr 18, 2025, 02_34_56 PM.png" alt="Hot Pink Suit">
-        <h3>Hot Pink Suit</h3>
-        <p>1700</p>
+        <img src="classicV-teal.png" alt="Teal set">
+        <h3>Classic Scrub Set</h3>
+        <p>1049</p>
         <select class="item_size">
           <option value="Small">Small</option>
           <option value="Medium">Medium</option>
@@ -196,29 +195,34 @@
         </select>
         <input type="hidden" class="item_color" value="">
         <div class="color-swatches">
-          <div class="swatch navy" title="navy"></div>
-          <div class="swatch charcoal" title="charcoal"></div>
           <div class="swatch black" title="black"></div>
-           <div class="swatch maroon" title="maroon"></div>
+          <div class="swatch charcoal" title="charcoal"></div>
+          <div class="swatch royalblue" title="royalblue"></div>
+          <div class="swatch navy" title="navy"></div>
+          <div class="swatch sagegreen" title="sagegreen"></div>
+           <div class="swatch brown" title="brown"></div>
         </div>
-        <button class="simple-cart-add" data-name="AAA" data-price="1700">Add to Cart</button>
+        <button class="simple-cart-add" data-name="classicV" data-price="1049">Add to Cart</button>
       </div>
       <div class="product">
-        <img src="suit2.png" alt="Slate Grey Suit">
-        <h3>Slate Grey Suit</h3>
+        <img src="patchyV-navy.png" alt="Navy Suit">
+        <h3>Edgy scrub set</h3>
         <p>1850</p>
         <select class="item_size">
           <option value="Small">Small</option>
           <option value="Medium">Medium</option>
           <option value="Large">Large</option>
+           <option value="XL">XL</option>
         </select>
         <input type="hidden" class="item_color" value="">
         <div class="color-swatches">
-          <div class="swatch black" title="Black"></div>
-          <div class="swatch maroon" title="Maroon"></div>
-          <div class="swatch cblue" title="Cobalt Blue"></div>
+          <div class="swatch black" title="black"></div>
+          <div class="swatch charcoal" title="charcoal"></div>
+          <div class="swatch dgreen" title="green"></div>
+            <div class="swatch teal" title="teal"></div>
+            <div class="swatch blue" title="blue"></div>
         </div>
-        <button class="simple-cart-add" data-name="BBB" data-price="1850">Add to Cart</button>
+        <button class="simple-cart-add" data-name="patchyV" data-price="1199">Add to Cart</button>
       </div>
       <div class="product">
         <img src="suit3.png" alt="Olive Green Suit">
@@ -252,16 +256,14 @@
 </form>
 <div id="checkout-summary"></div>
     <div id="cart-summary">
-      <h3>Your Cart</h3>
-      <div id="cart-list">
-        <table>
-          <thead>
-            <tr><th>Product</th><th>Size</th><th>Color</th><th>Price</th><th>Action</th></tr>
-          </thead>
-          <tbody id="cart-items"></tbody>
-        </table>
-        <div id="total-price">Total: ₹0</div>
-      </div>
+     <h3 style="text-align: center; font-size: 2rem; margin-bottom: 2rem;">Your Cart</h3>
+      <div id="cart-items" style="display: flex; flex-direction: column; gap: 1.5rem;"></div>
+       <div id="total-price" style="text-align: right; font-weight: bold; font-size: 1.5rem; margin-top: 2rem;">
+        Total: ₹0
+        </div>
+  <div style="text-align: center; margin-top: 2rem;">
+    <button class="checkout-button" style="padding: 0.75rem 2rem; font-size: 1.2rem;">Proceed to Checkout</button>
+  </div>
     </div>
   </section>
   <section id="about">
@@ -285,42 +287,56 @@
       const swatches = product.querySelectorAll('.swatch');
       const colorInput = product.querySelector('.item_color');
       const img = product.querySelector('img');
-      const baseName = product.getAttribute('data-base-name');
+      const img = product.querySelector('img');
+      const productName = product.querySelector('h3').textContent.trim().replace(/\s+/g, '_');
 
       swatches.forEach(swatch => {
         swatch.addEventListener('click', () => {
           swatches.forEach(s => s.classList.remove('selected'));
           swatch.classList.add('selected');
-          const color = swatch.getAttribute('title');
-          colorInput.value = color;
+           const color = swatch.getAttribute('title').toLowerCase().replace(/\s+/g, '_');
+           colorInput.value = color;
 
-          if (baseName) {
-            img.src = `${baseName}-${color}.png`;
-            img.alt = `${color} suit`;
-          }
+
+          img.src = `${productName}-${color}.png`;
+        img.alt = `${color} ${productName}`;
         });
       });
     });
 
     function updateCartDisplay() {
-      alert("Here");
       const cartItems = document.getElementById('cart-items');
       const totalPriceDiv = document.getElementById('total-price');
       cartItems.innerHTML = '';
       let total = 0;
 
       cart.forEach((item, index) => {
-        const row = document.createElement('tr');
-        row.innerHTML = `
-          <td>${item.name}</td>
-          <td>${item.size}</td>
-          <td>${item.color}</td>
-          <td>₹${item.price}</td>
-          <td><button class="remove-btn" data-index="${index}">Remove</button></td>
-        `;
-        cartItems.appendChild(row);
-        total += item.price;
-      });
+       const itemDiv = document.createElement('div');
+    itemDiv.style.display = 'flex';
+    itemDiv.style.alignItems = 'center';
+    itemDiv.style.justifyContent = 'space-between';
+    itemDiv.style.padding = '1rem';
+    itemDiv.style.border = '1px solid #ddd';
+    itemDiv.style.borderRadius = '10px';
+    itemDiv.style.backgroundColor = '#fff';
+
+    itemDiv.innerHTML = `
+      <div style="display: flex; align-items: center;">
+        <img src="images/${item.name}-${item.color}.png" alt="${item.name}" style="width: 80px; height: auto; border-radius: 8px; margin-right: 15px;">
+        <div>
+          <h4 style="margin: 0 0 5px;">${item.name}</h4>
+          <p style="margin: 0; color: #555;">Size: ${item.size}</p>
+          <p style="margin: 0; color: #555;">Color: ${item.color}</p>
+        </div>
+      </div>
+      <div style="text-align: right;">
+        <p style="font-weight: bold;">₹${item.price}</p>
+        <button class="remove-btn" data-index="${index}" style="background: red; color: white; border: none; padding: 5px 10px; border-radius: 5px; margin-top: 5px; cursor: pointer;">Remove</button>
+      </div>
+    `;
+cartItems.appendChild(itemDiv);
+    total += item.price;
+  });
 
       totalPriceDiv.textContent = `Total: ₹${total}`;
 
