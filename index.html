@@ -189,7 +189,7 @@
       <div class="product">
         <img src="classicV-teal.png" alt="Teal set">
         <h3>Classic Scrub Set</h3>
-        <p>This classic V neck scrub suit is made with breathable, anti stain , anti fade fabric so  you focus on saving lives while we focus on your comfort and style. </p>
+        <p>This classic V neck scrub suit is made of breathable, anti stain ,anti fade fabric so  you focus on saving lives while we focus on your comfort and style. </p>
            <p>This suit comes with three pockets on top and 2 pockets on bottom , strap for your id card and your name embroidered . </p>
         <select class="item_size">
           <option value="Small">Small</option>
@@ -214,17 +214,19 @@
 
 <!-- Embroidery Name -->
 <div style="margin-top: 10px;">
-  <label><strong>Embroidery (optional):</strong></label><br>
+  <label><strong>Embroidery </strong></label><br>
+   <small>We believe the World should know the name of our healer so its free </small>
   <input type="text" class="item_embroidery" placeholder="Enter name for embroidery" style="width: 100%; padding: 5px;">
-  <small>We believe the World should know the name of our healer so its free , but there is a small fee for any other details</small>
-    <input type="text" class="item_embroidery" placeholder="Enter name for embroidery" style="width: 100%; padding: 5px;">
-</div>
+  <small>There is a small fee(+Rs.100)  if you want to add any other details </small>
+    <input type="text" class="item_embroidery2" placeholder="Enter other" style="width: 100%; padding: 5px;">
+  </div>
+          <h3>1049</h3>
         <button class="simple-cart-add" data-name="classicV" data-price="1049">Add to Cart</button>
       </div>
       <div class="product">
         <img src="patchyV-navy.png" alt="Navy Suit">
         <h3>Edgy scrub set</h3>
-        <p>1850</p>
+        <p>This classic V neck scrub suit is made of breathable, anti stain ,anti fade fabric so  you focus on saving lives while we focus on your comfort and style</p>
         <select class="item_size">
           <option value="Small">Small</option>
           <option value="Medium">Medium</option>
@@ -375,13 +377,20 @@ cartItems.appendChild(itemDiv);
         const price = parseFloat(button.dataset.price);
         const size = product.querySelector('.item_size').value;
         const color = product.querySelector('.item_color').value;
+        const bottomStyle = product.querySelector('input[name^="bottom_style"]:checked')?.value;
+        const embroidery = product.querySelector('.item_embroidery')?.value || "";
+
+       if (!bottomStyle) {
+        alert('Please select a bottom style.');
+        return;
+       }
 
         if (!color) {
           alert('Please select a color by clicking on a swatch.');
           return;
         }
 
-        cart.push({ name, price, size, color });
+        cart.push({ name, price, size, color , bottomStyle, embroidery  });
         updateCartDisplay();
         alert(`Added to cart: ${name} - Size: ${size}, Color: ${color}`);
       });
@@ -390,7 +399,7 @@ cartItems.appendChild(itemDiv);
     // Checkout submission
     const checkoutForm = document.getElementById('checkout-form');
     checkoutForm.addEventListener('submit', function (e) {
-      e.preventDefault();
+    e.preventDefault();
 
       const name = document.getElementById('user-name').value.trim();
       const phone = document.getElementById('user-phone').value.trim();
@@ -401,10 +410,14 @@ cartItems.appendChild(itemDiv);
       }
 
       const formattedItems = cart.map(item => ({
-  name: item.name,
-  size: item.size,
-  color: item.color,
-  price: item.price
+     name: item.name,
+     size: item.size,
+     color: item.color,
+     price: item.price
+    bottomStyle: item.bottomStyle,
+     embroidery: item.embroidery,
+     price: item.price
+
 }));
 
 const payload = {
