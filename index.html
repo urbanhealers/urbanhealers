@@ -98,7 +98,7 @@
      .swatch.green { background-color: #065535; }
     .swatch.brown { background-color: #7B3F00; }
      .swatch.teal { background-color: #004c4c; }
-     .swatch.blue { background-color: ##97c4ed; }
+     .swatch.blue { background-color: #97c4ed; }
     #cart-list {
       margin-top: 20px;
     }
@@ -201,7 +201,7 @@
         <div class="color-swatches">
           <div class="swatch black" title="black"></div>
           <div class="swatch charcoal" title="charcoal"></div>
-          <div class="swatch royalblue" title="royalblue"></div>
+          <div class="swatch rblue" title="royalblue"></div>
           <div class="swatch navy" title="navy"></div>
           <div class="swatch sagegreen" title="sagegreen"></div>
            <div class="swatch brown" title="brown"></div>
@@ -243,8 +243,8 @@
         </div>
          <div style="margin-top: 10px;">
         <label><strong>Bottom Style:</strong></label><br>
-      <label><input type="radio" name="bottom_style_1" value="Straight" required> Straight</label>
-      <label><input type="radio" name="bottom_style_1" value="Jogger"> Jogger</label>
+      <label><input type="radio" name="bottom_style_2" value="Straight" required> Straight</label>
+      <label><input type="radio" name="bottom_style_2" value="Jogger"> Jogger</label>
       </div>
 
 <!-- Embroidery Name -->
@@ -278,8 +278,8 @@
         </div>
          <div style="margin-top: 10px;">
         <label><strong>Bottom Style:</strong></label><br>
-      <label><input type="radio" name="bottom_style_1" value="Straight" required> Straight</label>
-      <label><input type="radio" name="bottom_style_1" value="Jogger"> Jogger</label>
+      <label><input type="radio" name="bottom_style_3" value="Straight" required> Straight</label>
+      <label><input type="radio" name="bottom_style_3" value="Jogger"> Jogger</label>
       </div>
 
 <!-- Embroidery Name -->
@@ -291,7 +291,7 @@
     <input type="text" class="item_embroidery2" placeholder="Enter other" style="width: 100%; padding: 5px;">
   </div>
           <h3>1449</h3>
-        <button class="simple-cart-add" data-name="CCC" data-price="1449">Add to Cart</button>
+        <button class="simple-cart-add" data-name="madarinW" data-price="1449">Add to Cart</button>
       </div>
       <div class="product">
         <img src="mandarinZip-black.png" alt="black Suit">
@@ -316,8 +316,8 @@
         </div>
          <div style="margin-top: 10px;">
         <label><strong>Bottom Style:</strong></label><br>
-      <label><input type="radio" name="bottom_style_1" value="Straight" required> Straight</label>
-      <label><input type="radio" name="bottom_style_1" value="Jogger"> Jogger</label>
+      <label><input type="radio" name="bottom_style_4" value="Straight" required> Straight</label>
+      <label><input type="radio" name="bottom_style_4" value="Jogger"> Jogger</label>
       </div>
 
 <!-- Embroidery Name -->
@@ -329,7 +329,7 @@
     <input type="text" class="item_embroidery2" placeholder="Enter other" style="width: 100%; padding: 5px;">
   </div>
           <h3>1459</h3>
-        <button class="simple-cart-add" data-name="CCC" data-price="1459">Add to Cart</button>
+        <button class="simple-cart-add" data-name="mandarinZip" data-price="1459">Add to Cart</button>
       </div>
       
     </div>
@@ -378,9 +378,9 @@
       const swatches = product.querySelectorAll('.swatch');
       const colorInput = product.querySelector('.item_color');
       const img = product.querySelector('img');
-      const img = product.querySelector('img');
       const productName = product.querySelector('h3').textContent.trim().replace(/\s+/g, '_');
-
+      alert("in 382");
+alert(productName);
       swatches.forEach(swatch => {
         swatch.addEventListener('click', () => {
           swatches.forEach(s => s.classList.remove('selected'));
