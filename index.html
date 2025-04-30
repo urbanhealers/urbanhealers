@@ -378,8 +378,7 @@
       const swatches = product.querySelectorAll('.swatch');
       const colorInput = product.querySelector('.item_color');
       const img = product.querySelector('img');
-      const productName = product.querySelector('h3').textContent.trim().replace(/\s+/g, '_');
-      alert("in 382");
+      const productName = product.querySelector('h3').textContent.trim().replace(/\s+/g, '_');    
 
       swatches.forEach(swatch => {
         swatch.addEventListener('click', () => {
@@ -389,11 +388,11 @@
            colorInput.value = color;
           img.src = `${productName}-${color}.png`;
          img.alt = `${color} ${productName}`;
-            alert(${productName}-${color});
+          
         });
       });
     });
-
+ alert(`${productName}-${color}`);
     function updateCartDisplay() {
       const cartItems = document.getElementById('cart-items');
       const totalPriceDiv = document.getElementById('total-price');
