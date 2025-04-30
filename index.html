@@ -451,6 +451,7 @@ cartItems.appendChild(itemDiv);
         const color = product.querySelector('.item_color').value;
         const bottomStyle = product.querySelector('input[name^="bottom_style"]:checked')?.value;
         const embroidery = product.querySelector('.item_embroidery')?.value || "";
+         const embroidery2 = product.querySelector('.item_embroidery2')?.value || "";
 
        if (!bottomStyle) {
         alert('Please select a bottom style.');
@@ -462,7 +463,7 @@ cartItems.appendChild(itemDiv);
           return;
         }
 
-        cart.push({ name, price, size, color , bottomStyle, embroidery  });
+        cart.push({ name, price, size, color , bottomStyle, embroidery, embroidery2 });
         updateCartDisplay();
         alert(`Added to cart: ${name} - Size: ${size}, Color: ${color}`);
       });
@@ -488,6 +489,7 @@ cartItems.appendChild(itemDiv);
      price: item.price
     bottomStyle: item.bottomStyle,
      embroidery: item.embroidery,
+    embroidery2: item.embroidery2,
      price: item.price
 
 }));
